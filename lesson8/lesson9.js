@@ -27,7 +27,7 @@
 
 // Чему равно 0 || "" || 2 || undefined || true || falsе 2 ?
 
-// "use strict";
+"use strict";
 
 let money, time;
 
