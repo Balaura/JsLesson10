@@ -29,18 +29,26 @@
 
 // "use strict";
 
-let money = prompt('Ваш бюджет на месяц?', ''),
-     time = prompt('Введите дату в формате YYYY-MM-DD', '');
+let money, time;
 
-let AppData = {
+function start () {
+     money = prompt('Ваш бюджет на месяц?', '');
+     time = prompt('Введите дату в формате YYYY-MM-DD', '');
+     
+     while(isNaN(money) || money == '' || money == null) {
+          money = prompt('Ваш бюджет на месяц?', '');
+     }
+}
+start ();
+
+let  AppData = {
      budget: money,
      timeData: time,
      expenses: {},
      optionalExpenses: {},
      income: [],
-     savings: false
+     savings: true
 };
-
 // let i = 0;
 // while (i < 2) {
 //      let a = +prompt('Введите обязательную статью расходов в этом месяце', ''),
@@ -53,41 +61,72 @@ let AppData = {
 //      }
 //      i++; 
 // }
-let i = 0;
-do {
-     i++; 
-}
-while (i < 2) {
-     let a = +prompt('Введите обязательную статью расходов в этом месяце', ''),
-          b = prompt('Во сколько обойдется?', ''); 
-     if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' && b != '' && a.lenght < 50) {
-          console.log("done");
-          AppData.expenses[a] = b;
-     } else {
-          
-     }
-}
-// for (let i = 0; i < 2; i++) {
-//      let  a = +prompt('Введите обязательную статью расходов в этом месяце', ''),
-//           b = prompt('Во сколько обойдется?', '');
+// let i = 0;
+// do {
+//      i++; 
+// }
+// while (i < 2) {
+//      let a = +prompt('Введите обязательную статью расходов в этом месяце', ''),
+//           b = prompt('Во сколько обойдется?', ''); 
 //      if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' && b != '' && a.lenght < 50) {
 //           console.log("done");
 //           AppData.expenses[a] = b;
 //      } else {
-
+          
 //      }
 // }
-
-AppData.moneyPerDay = AppData.budget / 30;
-
-alert("Ежедневный бюджет: " + AppData.moneyPerDay);
-
-if(AppData.moneyPerDay <100) {
-     console.log("Минимальный уровень достатка");
-} else if (AppData.moneyPerDay > 100 && AppData.moneyPerDay < 2000) {
-     console.log("Средний уровень достатка");
-} else if (AppData.moneyPerDay < 2000) {
-     console.log("Максимаьный уровень достатка");
-} else {
-     console.log("Error");
+function chooseExpenses () {
+     for (let i = 0; i < 2; i++) {
+          let  a = +prompt('Введите обязательную статью расходов в этом месяце', ''),
+               b = prompt('Во сколько обойдется?', '');
+          if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' && b != '' && a.lenght < 50) {
+               console.log("done");
+               AppData.expenses[a] = b;
+          } else {
+     
+          }
+     }
 }
+chooseExpenses();
+
+function detectDayBudget () {
+     AppData.moneyPerDay = (AppData.budget / 30).toFixed();
+     alert ('Бюджет на один день ' + AppData.moneyPerDay + 'руб.');
+}
+detectDayBudget();
+
+function detectLevel () {
+     if(AppData.moneyPerDay <100) {
+          console.log("Минимальный уровень достатка");
+     } else if (AppData.moneyPerDay > 100 && AppData.moneyPerDay < 2000) {
+          console.log("Средний уровень достатка");
+     } else if (AppData.moneyPerDay < 2000) {
+          console.log("Максимаьный уровень достатка");
+     } else {
+          console.log("Error");
+     }
+}
+detectLevel();
+
+function checkSavings() {
+     if (AppData.savings == true) {
+          let save = +prompt('Какова сумма накопления?'),
+               percent = +prompt('Какой процент?');
+          AppData.monthIncome = save/100/12*percent;
+          alert('Доход в месяц с вашего депозита: ' + AppData.monthIncome);
+     }
+}
+checkSavings();
+
+function chooseOptExpenses () {
+     for (let i = 155; i < 3; i++) {
+          let questionOptExpenses = +prompt('Статья необязательных расходов?', '');
+          if ( (typeof(a)) === 'string' && (typeof(a)) != null && a != '' && a.lenght < 50) {
+               AppData.optionalExpenses[i]= questionOptExpenses;
+               console.log(AppData.optionalExpenses);
+          } else {
+     
+          }
+     }
+}
+chooseExpenses();
